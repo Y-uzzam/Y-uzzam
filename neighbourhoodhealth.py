@@ -1,32 +1,16 @@
-"""CSC108: Fall 2022 -- Assignment 3: Hypertension and Low Income
 
-This code is provided solely for the personal and private use of
-students taking the CSC108/CSCA08 course at the University of
-Toronto. Copying for purposes other than this use is expressly
-prohibited. All forms of distribution of this code, whether as given
-or with any changes, are expressly prohibited.
-
-All of the files in this directory and all subdirectories are:
-Copyright (c) 2022 Jacqueline Smith and David Liu
-"""
 from typing import TextIO
-import statistics  # Note that this requires Python 3.10
+import statistics
 
 ID = "id"
 HT_KEY = "hypertension"
 TOTAL = "total"
 LOW_INCOME = "low_income"
-
-# Indexes in the inner lists of hypertension data in CityData
-# HT is an abbreviation of hypertension, NBH is an abbreviation of neighbourhood
 HT_20_44 = 0
 NBH_20_44 = 1
 HT_45_64 = 2
 NBH_45_64 = 3
 HT_65_UP = 4
-NBH_65_UP = 5
-
-# columns in input files
 ID_COL = 0
 NBH_NAME_COL = 1
 POP_COL = 2
@@ -94,7 +78,6 @@ SAMPLE_DATA2 = {
 }
 
 
-# This function is provided for use in Tasks 3 and 4. You should not change it.
 def get_age_standardized_ht_rate(ndata: 'CityData', name: str) -> float:
     """Return the age standardized hypertension rate from the neighbourhood in
     ndata matching the given name.
@@ -108,8 +91,6 @@ def get_age_standardized_ht_rate(ndata: 'CityData', name: str) -> float:
     """
     rates = calculate_ht_rates_by_age_group(ndata, name)
 
-    # These rates are normalized for only 20+ ages, using the census data
-    # that our datasets are based on.
     canada_20_44 = 11_199_830 / 19_735_665  # Number of 20-44 / Number of 20+
     canada_45_64 = 5_365_865 / 19_735_665  # Number of 45-64 / Number of 20+
     canada_65_plus = 3_169_970 / 19_735_665  # Number of 65+ / Number of 20+
@@ -119,7 +100,6 @@ def get_age_standardized_ht_rate(ndata: 'CityData', name: str) -> float:
             + rates[2] * canada_65_plus)
 
 
-# Task 1
 def converttodigit(string: str) -> int:
     """Return an integer based on a string made of digits.
     """
@@ -231,7 +211,6 @@ def get_low_income_data(z: dict, filename: TextIO) -> None:
         i = i + 1
 
 
-# Task 2
 def get_bigger_neighbourhood(data: dict, n1: str, n2: str) -> str:
     """Return the neighbourhood with the larger population from 
     low income data.
@@ -369,7 +348,6 @@ def calculate_ht_rates_by_age_group(data: 'CityData', area: str) \
         return tup
 
 
-# Task 3
 def get_stats_summary(data: 'CityData') -> float:
     """Return the correlation between age standardized hypertension
     rates and low income rates across all neighbourhoods.
@@ -388,7 +366,6 @@ def get_stats_summary(data: 'CityData') -> float:
     return statistics.correlation(htlist, lilist)
 
 
-# Task 4
 def order_by_ht_rate(data: 'CityData') -> list[str]:
     """Return a list of the names of the neighbourhoods, ordered 
     from lowest to highest age-standardized hypertension rate.
@@ -417,18 +394,14 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
 
-    # Using the small data files
     small_data = {}
 
-    # Add hypertension data
     ht_file = open("hypertension_data_small.csv")
     get_hypertension_data(small_data, ht_file)
     ht_file.close()
 
-    # Add low income data
     li_file = open("low_income_small.csv")
     get_low_income_data(small_data, li_file)
     li_file.close()
 
-    # Created dictionary should be the same as SAMPLE_DATA
     print(small_data == SAMPLE_DATA)
