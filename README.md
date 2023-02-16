@@ -1,4 +1,4 @@
-- 👋 Hi, I’m @Y-uzzam
+
 - 👀 I’m interested in stochastics and time series
 - 🌱 I’m currently learning C++
 
